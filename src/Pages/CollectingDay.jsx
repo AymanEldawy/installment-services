@@ -6,6 +6,7 @@ import { SectionTitle } from "./../components/SectionTitle/SectionTitle";
 
 const CollectingDay = () => {
   const [collect, setCollect] = useState();
+  const [collectingFilter, setCollectingFilter] = useState();
   const [collectDays, setCollectDays] = useState();
   const params = useParams();
   const { id } = params;
@@ -14,7 +15,7 @@ const CollectingDay = () => {
     await fetch(`http://localhost:4000/collecting`)
       .then((res) => res.json())
       .then((data) => {
-        let day = data.find((collect) => collect?.day_id === id);
+        let day = data.find((collect) => collect?.id === id);
         console.log(data, day);
         setCollect(day);
       });
@@ -27,6 +28,7 @@ const CollectingDay = () => {
         let dayCollecting = data.filter(
           (collectDay) => collectDay.created_at === id
         );
+        setCollectingFilter(dayCollecting);
         setCollectDays(dayCollecting);
       });
   };
@@ -52,7 +54,7 @@ const CollectingDay = () => {
   };
 
   const deleteCollect = async (collectId) => {
-    let confirm = window.confirm("هل انت متاكد انك تريد حذف هذا المستخدم");
+    let confirm = window.confirm("هل انت متاكد انك تريد حذف هذا التحصيل");
     if (confirm) {
       await fetch(`http://localhost:4000/collect_day/${collectId}`, {
         method: "DELETE",
@@ -61,6 +63,25 @@ const CollectingDay = () => {
         .then((data) => getCollectingDays());
     }
   };
+
+  const handelSearch = (e) => {
+    let key = e.target.value;
+    console.log(key)
+    if (key !== "") {
+      let collectFilters = collectDays?.filter((collect) => {
+        return (
+          collect?.username.indexOf(key) !== -1 ||
+          collect?.order_name?.indexOf(key) !== -1 ||
+          collect?.price?.indexOf(key) !== -1
+        );
+      });
+      setCollectingFilter(collectFilters);
+    } else {
+      setCollectingFilter(collectDays);
+    }
+    console.log(collectingFilter)
+  };
+
   return (
     <div className="mt-12">
       <div className="container">
@@ -81,20 +102,31 @@ const CollectingDay = () => {
             </div>
           }
         />
-        <div className="grid grid-cols-2 gap-4 text-lg mt-8">
+        <div className="grid grid-cols-2 gap-4 text-lg mt-4">
           <div className="shadow bg-green-200 rounded-md  flex-1 flex gap-4 p-2">
             <span className="w-28 flex-1 ">أجمالي العملاء:</span>{" "}
             <strong className="flex-1">
-              {!!collect ? getInformationCount(collect?.day_id) : null}
+              {!!collect ? getInformationCount(collect?.id) : null}
             </strong>
           </div>
           <div className="shadow bg-yellow-200 rounded-md  flex-1 flex gap-4 p-2">
             <span className="w-28 flex-1 ">المبلغ الاجمالي :</span>{" "}
             <strong className="flex-1">
-              {!!collect ? getInformationPrice(collect?.day_id) : null}
+              {!!collect ? getInformationPrice(collect?.id) : null}
             </strong>
           </div>
         </div>
+        <div className="border-t border-gray-300  mt-4" />
+
+        <div className="flex gap-4 my-4 justify-between">
+          <input
+            onChange={handelSearch}
+            type="search"
+            placeholder="أبحث في المدفوعات"
+            className="p-2 rounded-md block flex-1 max-w-xs"
+          />
+        </div>
+        <div className="border-t border-gray-300  mt-4" />
         <table className="shadow table-auto w-full mt-8 bg-white">
           <thead className="bg-blue-600 text-white">
             <tr className="border">
@@ -114,8 +146,8 @@ const CollectingDay = () => {
             </tr>
           </thead>
           <tbody>
-            {collectDays
-              ? collectDays?.map((collectDay, index) => (
+            {collectingFilter
+              ? collectingFilter?.map((collectDay, index) => (
                   <tr key={collectDay?.id}>
                     <td className="border p-2">{index + 1}</td>
                     <td className="border p-2">{collectDay?.username}</td>

@@ -116,7 +116,7 @@ const DailyCollect = () => {
             >
               <option>....</option>
               {collecting?.map((_collect) => (
-                <option key={_collect?.day_id} value={_collect?.day_id}>
+                <option key={_collect?.id} value={_collect?.id}>
                   {new Date(_collect?.date)?.toLocaleDateString("ar-EG", {
                     year: "numeric",
                     month: "short",
@@ -144,8 +144,8 @@ const DailyCollect = () => {
               <option>....</option>
               {users?.map((user) => (
                 <option
-                  key={user?.user_id}
-                  value={`${user?.user_id}|${user?.name}`}
+                  key={user?.id}
+                  value={`${user?.id}|${user?.name}`}
                 >
                   {user?.name}
                 </option>
@@ -169,7 +169,7 @@ const DailyCollect = () => {
             >
               <option>....</option>
               {filterOrders?.map((order) => (
-                <option key={order?.order_id} value={`${order?.order_id}|${order?.product_name}`}>
+                <option key={order?.id} value={`${order?.id}|${order?.product_name}`}>
                   {order?.product_name}
                 </option>
               ))}

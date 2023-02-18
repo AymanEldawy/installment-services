@@ -116,7 +116,7 @@ export const Customers = (props) => {
                   <td className="border p-2">1</td>
                   <td className="border p-2">
                     <NavLink
-                      to={`customers/${user?.user_id}`}
+                      to={`customers/${user?.id}`}
                       className="underline text-blue-500 font-medium text-lg bg-blue-100 p-1 rounded"
                     >
                       {user?.name}

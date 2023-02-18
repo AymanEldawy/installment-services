@@ -33,7 +33,7 @@ const AddNewOrder = () => {
   const handelSubmit = async (e) => {
     console.log(msg);
     e.preventDefault();
-    if (product_name && product_price && total_price) {
+    if (product_name && product_price && total_price && username && user_id) {
       await fetch(`http://localhost:4000/orders`, {
         method: "POST",
         headers: {
@@ -58,6 +58,13 @@ const AddNewOrder = () => {
         .then((data) => data.json())
         .then((response) => {
           setMsg("success");
+          setProductName("");
+          setProductPrice(0);
+          setOffered(0);
+          setPricePerMonth(0);
+          setMonthCount(0);
+          setTotalPrice(0);
+          setTotalPrice(0);
           setTimeout(() => {
             setMsg("");
           }, 4000);
@@ -93,8 +100,9 @@ const AddNewOrder = () => {
                   setUsername(userInfo[1]);
                 }}
               >
+                <option>...</option>
                 {users?.map((user) => (
-                  <option value={`${user?.user_id}|${user?.name}`}>
+                  <option value={`${user?.id}|${user?.name}`}>
                     {user?.name}
                   </option>
                 ))}
@@ -159,7 +167,7 @@ const AddNewOrder = () => {
               ) : null}
             </>
           )}
-          <PrimaryButton text="أضافة طلب جديد" classes='mt-8 !p-3' />
+          <PrimaryButton text="أضافة طلب جديد" classes="mt-8 !p-3" />
         </form>
       </div>
     </div>

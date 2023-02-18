@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 import { InputField } from "./../Forms/InputField";
 import { PrimaryButton } from "./../Global/PrimaryButton/PrimaryButton";
-import { v4 as uuidv4 } from "uuid";
 
 export const AddNewCustomer = () => {
   // https://deploy-json-server-r6e2vseod-aymaneldawy.vercel.app/orders
@@ -25,7 +25,7 @@ export const AddNewCustomer = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          user_id: uuidv4(),
+          id: uuidv4(),
           name,
           phone,
           address,

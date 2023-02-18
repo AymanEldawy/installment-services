@@ -111,13 +111,13 @@ const Orders = () => {
               {filterOrders
                 ? filterOrders?.map((order, index) => (
                     <tr
-                      key={order?.order_id}
+                      key={order?.id}
                       className={`${order?.status ? "bg-green-300" : ""} `}
                     >
                       <td className="border p-2">{index + 1}</td>
                       <td className="border p-2">
                         <Link
-                          to={`/orders/${order?.order_id}`}
+                          to={`/orders/${order?.id}`}
                           className="text-blue-500 font-medium text-lg bg-blue-100 p-1 rounded cursor-pointer"
                         >
                           {order?.product_name}

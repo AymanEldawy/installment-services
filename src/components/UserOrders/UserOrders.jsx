@@ -29,7 +29,7 @@ export const UserOrders = ({ order }) => {
   return (
     <div className="bg-white shadow-md p-2 rounded mb-8">
       <Link
-        to={`/orders/${order?.order_id}`}
+        to={`/orders/${order?.id}`}
         className="bg-blue-500 text-center p-2 text-white flex justify-center shadow-md"
       >
         {order?.product_name}
@@ -51,6 +51,10 @@ export const UserOrders = ({ order }) => {
         <span className="flex-1">{order?.product_price}</span>
       </div>
       <div className="flex-1 border-b p-2 flex gap-2">
+        <span className="flex-1">المقدم</span>
+        <span className="flex-1">{order?.offered}</span>
+      </div>
+      <div className="flex-1 border-b p-2 flex gap-2">
         <span className="flex-1">مدة التقسيط</span>
         <div className="flex-1 flex justify-between gap-2">
           <span>{order?.month_count} شهر</span>
@@ -68,7 +72,7 @@ export const UserOrders = ({ order }) => {
         <div className="flex-1 flex justify-between gap-2">
           <span>{order?.total_price}</span>
           <span className="bg-green-400 p-1 text-black text-sm">
-            {getOrderTotalPaid()}
+            {getOrderTotalPaid() + +order?.offered}
           </span>
         </div>
       </div>

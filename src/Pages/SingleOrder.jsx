@@ -9,12 +9,10 @@ const SingleOrder = () => {
   const navigate = useNavigate();
   const { id } = params;
   const getOrder = async () => {
-    await fetch("http://localhost:4000/orders")
+    await fetch(`http://localhost:4000/orders/${id}`)
       .then((res) => res.json())
       .then((data) => {
-        let order = data.find((order) => order?.order_id === id);
-        console.log(order);
-        setOrder(order);
+        setOrder(data);
       });
   };
   const getCollectingDays = async () => {
@@ -40,7 +38,7 @@ const SingleOrder = () => {
   const deleteOrder = async () => {
     let confirm = window.confirm("هل انت متاكد انك تريد حذف الطلب؟");
     if (confirm) {
-      await fetch(`http://localhost:4000/orders/${order?.order_id}`, {
+      await fetch(`http://localhost:4000/orders/${order?.id}`, {
         method: "DELETE",
       })
         .then((res) => res.json())
@@ -53,14 +51,16 @@ const SingleOrder = () => {
     let confirm = window.confirm(
       "هل انت متاكد انك تريد تغيير حالة الطلب الي طلب مكتمل؟"
     );
+    console.log(order?.id);
     if (confirm) {
-      let newOrder = order;
-      newOrder.status = true;
-      await fetch(`http://localhost:4000/orders/${order?.order_id}`, {
+      await fetch(`http://localhost:4000/orders/${order?.id}`, {
         method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
-          ...newOrder,
-          // status: true,
+          ...order,
+          status: true,
         }),
       })
         .then((res) => res.json())

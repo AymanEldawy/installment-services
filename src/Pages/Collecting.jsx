@@ -9,10 +9,14 @@ const Collecting = () => {
   const [dayMsg, setDayMsg] = useState(false);
   const [collecting, setCollecting] = useState();
   const [collectDays, setCollectDays] = useState();
+  const [collectingFilter, setCollectingFilter] = useState();
   const getCollecting = async () => {
     await fetch("http://localhost:4000/collecting")
       .then((res) => res.json())
-      .then((data) => setCollecting(data));
+      .then((data) => {
+        setCollecting(data);
+        setCollectingFilter(data);
+      });
   };
   const getCollectingDays = async () => {
     await fetch("http://localhost:4000/collect_day")
@@ -76,7 +80,7 @@ const Collecting = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            day_id: uuidv4(),
+            id: uuidv4(),
             date: new Date(),
           }),
         })
@@ -91,6 +95,25 @@ const Collecting = () => {
       }
     }
   };
+
+  const handelSearch = (e) => {
+    let key = e.target.value;
+    if (key !== "") {
+      let collectFilters = collecting?.filter((collect) => {
+        let date = new Date(collect?.date)?.toLocaleDateString("ar-EG", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+          weekday: "long",
+        });
+
+        return date.indexOf(key) !== -1 || collect?.date?.indexOf(key) !== -1;
+      });
+      setCollectingFilter(collectFilters);
+    } else {
+      setCollectingFilter(collecting);
+    }
+  };
   return (
     <>
       {/* {open ? <AddNewCollect close={() => setOpen(false)} /> : null} */}
@@ -100,11 +123,20 @@ const Collecting = () => {
             title="التحصيلات"
             extraContent={
               <>
-                {dayMsg ? <p className='bg-yellow-300 p-2'>{dayMsg}</p> : null}
+                {dayMsg ? <p className="bg-yellow-300 p-2">{dayMsg}</p> : null}
                 <PrimaryButton text="أضافة يوم جديد" onClick={addNewDate} />
               </>
             }
           />
+          <div className="flex gap-4 justify-between">
+            <input
+              onChange={handelSearch}
+              type="search"
+              placeholder="أبحث في أيام التحصيل"
+              className="p-2 rounded-md block flex-1 max-w-xs "
+            />
+          </div>
+          <div className="border-t mt-4" />
         </div>
         <table className="shadow table-auto w-full mt-8 bg-white">
           <thead className="bg-blue-600 text-white">
@@ -116,33 +148,40 @@ const Collecting = () => {
             </tr>
           </thead>
           <tbody>
-            {collecting
-              ? collecting?.map((collect, index) => (
-                  <tr key={collect?.day_id}>
-                    <td className="border p-2">{index + 1}</td>
-                    <td className="border p-2">
-                      <NavLink
-                        to={`/collecting/${collect?.day_id}`}
-                        className="underline text-blue-500 font-medium text-lg bg-blue-100 p-1 rounded cursor-pointer"
-                      >
-                        {new Date(collect?.date)?.toLocaleDateString("ar-EG", {
-                          year: "numeric",
-                          month: "short",
-                          day: "numeric",
-                          weekday: "long",
-                        })}
-                      </NavLink>
-                    </td>
-                    <td className="border p-2">
-                      {!!collect ? getInformationCount(collect?.day_id) : null}{" "}
-                      عملاء
-                    </td>
-                    <td className="border p-2">
-                      {!!collect ? getInformationPrice(collect?.day_id) : null}{" "}
-                      جنية
-                    </td>
-                  </tr>
-                ))
+            {collectingFilter
+              ? collectingFilter
+                  ?.sort(function (a, b) {
+                    return new Date(b.date) - new Date(a.date);
+                  })
+                  .map((collect, index) => (
+                    <tr key={collect?.id}>
+                      <td className="border p-2">{index + 1}</td>
+                      <td className="border p-2">
+                        <NavLink
+                          to={`/collecting/${collect?.id}`}
+                          className="underline text-blue-500 font-medium text-lg bg-blue-100 p-1 rounded cursor-pointer"
+                        >
+                          {new Date(collect?.date)?.toLocaleDateString(
+                            "ar-EG",
+                            {
+                              year: "numeric",
+                              month: "short",
+                              day: "numeric",
+                              weekday: "long",
+                            }
+                          )}
+                        </NavLink>
+                      </td>
+                      <td className="border p-2">
+                        {!!collect ? getInformationCount(collect?.id) : null}{" "}
+                        عملاء
+                      </td>
+                      <td className="border p-2">
+                        {!!collect ? getInformationPrice(collect?.id) : null}{" "}
+                        جنية
+                      </td>
+                    </tr>
+                  ))
               : null}
           </tbody>
         </table>{" "}
