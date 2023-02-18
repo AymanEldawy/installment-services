@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/installment-services/static/css/main.c22dcc65.css",
+    "main.js": "/installment-services/static/js/main.3fed9b6a.js",
+    "index.html": "/installment-services/index.html",
+    "main.c22dcc65.css.map": "/installment-services/static/css/main.c22dcc65.css.map",
+    "main.3fed9b6a.js.map": "/installment-services/static/js/main.3fed9b6a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c22dcc65.css",
+    "static/js/main.3fed9b6a.js"
+  ]
+}
