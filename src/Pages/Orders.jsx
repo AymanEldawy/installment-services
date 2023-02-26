@@ -8,7 +8,7 @@ const Orders = () => {
   const [orders, setOrders] = useState();
   const [filterOrders, setFilterOrders] = useState();
   const getOrders = async () => {
-    await fetch("http://localhost:4000/orders")
+    await fetch("https://installment-json-serve.onrender.com/orders")
       .then((res) => res.json())
       .then((data) => {
         setFilterOrders(data);

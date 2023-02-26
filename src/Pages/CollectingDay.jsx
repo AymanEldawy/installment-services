@@ -12,7 +12,7 @@ const CollectingDay = () => {
   const { id } = params;
 
   const getCollect = async () => {
-    await fetch(`http://localhost:4000/collecting`)
+    await fetch(`https://installment-json-serve.onrender.com/collecting`)
       .then((res) => res.json())
       .then((data) => {
         let day = data.find((collect) => collect?.id === id);
@@ -22,7 +22,7 @@ const CollectingDay = () => {
   };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getCollectingDays = async () => {
-    await fetch("http://localhost:4000/collect_day")
+    await fetch("https://installment-json-serve.onrender.com/collect_day")
       .then((res) => res.json())
       .then((data) => {
         let dayCollecting = data.filter(
@@ -56,7 +56,7 @@ const CollectingDay = () => {
   const deleteCollect = async (collectId) => {
     let confirm = window.confirm("هل انت متاكد انك تريد حذف هذا التحصيل");
     if (confirm) {
-      await fetch(`http://localhost:4000/collect_day/${collectId}`, {
+      await fetch(`https://installment-json-serve.onrender.com/collect_day/${collectId}`, {
         method: "DELETE",
       })
         .then((res) => res.json())

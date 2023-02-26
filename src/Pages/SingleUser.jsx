@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { UserOrders } from "./../components/UserOrders/UserOrders";
 import avatar from "../img_avatar.png";
+import { UserOrders } from "./../components/UserOrders/UserOrders";
+
 const SingleUser = () => {
   const [orders, setOrders] = useState();
   const params = useParams();
   const { id } = params;
   const [user, setUser] = useState();
   const getOrders = async () => {
-    await fetch("http://localhost:4000/orders")
+    await fetch("https://installment-json-serve.onrender.com/orders")
       .then((res) => res.json())
       .then((data) => {
         let filterOrders = data?.filter((order) => order?.user_id === id);
@@ -17,7 +18,7 @@ const SingleUser = () => {
       });
   };
   const getUsers = async () => {
-    await fetch(`http://localhost:4000/users/${id}`)
+    await fetch(`https://installment-json-serve.onrender.com/users/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setUser(data);
@@ -29,7 +30,22 @@ const SingleUser = () => {
     console.log(orders);
     console.log(user);
   }, []);
-
+  const blockUser = async () => {
+    await fetch(`https://installment-json-serve.onrender.com/users/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...user,
+        status: !user?.status,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setUser(data);
+      });
+  };
   return (
     <>
       <div className="bg-blue-400 max-h-36 mb-16">
@@ -42,6 +58,12 @@ const SingleUser = () => {
         </figure>
       </div>
       <div className="container">
+        <button
+          onClick={blockUser}
+          className="mr-auto text-lg bg-red-500 text-white p-1 px-4 rounded mb-4"
+        >
+          {user?.status ? "حظر" : "رفع الحظر"}
+        </button>
         <div className="flex flex-col md:flex-row gap-8 sm:text-lg items-start">
           <ul className="shadow bg-white rounded-md p-2 md:max-w-sm flex-1 ">
             <li className="flex gap-4 p-2 border-b bg-gray-100">
@@ -50,7 +72,9 @@ const SingleUser = () => {
             </li>
             <li className="flex gap-4 p-2 border-b">
               <span className="w-28 flex-1">رقم الهاتف:</span>{" "}
-              <strong className="flex-1 bg-yellow-300 px-2">{user?.phone}</strong>
+              <strong className="flex-1 text-blue-700 px-2">
+                {user?.phone}
+              </strong>
             </li>
             <li className="flex gap-4 p-2 border-b bg-gray-100">
               <span className="w-28 flex-1">رقم البطاقة:</span>{" "}
@@ -62,13 +86,19 @@ const SingleUser = () => {
             </li>
             <li className="flex gap-4 p-2 border-b bg-gray-100">
               <span className="w-28 flex-1">الحالة:</span>{" "}
-              <strong className="flex-1">
-                {user?.status ? "يسمح" : "لا يسمح بالتقسيط له"}
+              <strong className="flex-1 flex justify-between">
+                {user?.status ? (
+                  "يسمح"
+                ) : (
+                  <span className="bg-red-500 text-sm text-white p-1">
+                    لا يسمح بالتقسيط له
+                  </span>
+                )}
               </strong>
             </li>
             <li className="flex gap-4 p-2">
               <span className="w-28 flex-1">عدد الطلبات:</span>{" "}
-              <strong className="flex-1 bg-yellow-300 px-2">
+              <strong className="flex-1 text-indigo-600 px-2">
                 {orders?.length === 0
                   ? "لا يوجد طلبات"
                   : `${orders?.length} طلب`}
@@ -81,10 +111,6 @@ const SingleUser = () => {
             ))}
           </div>
         </div>
-        {/* user info */}
-        {/* user data */}
-        {/* update user */}
-        {/* user orders */}
       </div>
     </>
   );

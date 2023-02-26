@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export const UserOrders = ({ order }) => {
   const [collectOrder, setCollectOrder] = useState();
   const getCollecting = async () => {
-    await fetch("http://localhost:4000/collect_day")
+    await fetch("https://installment-json-serve.onrender.com/collect_day")
       .then((res) => res.json())
       .then((data) => {
         let collecting = data?.filter(

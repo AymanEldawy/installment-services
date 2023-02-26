@@ -8,7 +8,7 @@ export const Customers = (props) => {
   const [filterStatus, setFilterStatus] = useState("الكل");
 
   const getUsers = async () => {
-    await fetch("http://localhost:4000/users")
+    await fetch("https://installment-json-serve.onrender.com/users")
       .then((res) => res.json())
       .then((data) => {
         setUsersFilters(data);
@@ -21,7 +21,7 @@ export const Customers = (props) => {
   const deleteUser = async (id) => {
     let confirm = window.confirm("هل انت متاكد انك تريد حذف هذا المستخدم");
     if (confirm) {
-      await fetch(`http://localhost:4000/users/${id}`, {
+      await fetch(`https://installment-json-serve.onrender.com/users/${id}`, {
         method: "DELETE",
       })
         .then((res) => res.json())
@@ -107,7 +107,7 @@ export const Customers = (props) => {
           </tr>
         </thead>
         <tbody>
-          {usersFilter
+          {usersFilter?.length
             ? usersFilter?.map((user, index) => (
                 <tr
                   className={`border ${!user?.status ? "bg-red-300" : ""}`}

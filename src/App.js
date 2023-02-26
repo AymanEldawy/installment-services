@@ -13,19 +13,9 @@ import SingleOrder from "./Pages/SingleOrder";
 import SingleUser from "./Pages/SingleUser";
 
 function App() {
-  // const [openedSearch, setOpenedSearch] = useState(false);
-  // const [menuOpened, setMenuOpened] = useState(false);
   return (
     <div className="App">
-      <MenuMobile
-      // openMenu={() => setMenuOpened(true)}
-      // setOpenedSearch={setOpenedSearch}
-      />
-      {/* <MenuSidebar
-        closeMenu={() => setMenuOpened(false)}
-        menuOpened={menuOpened}
-      /> */}
-
+      <MenuMobile />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/customers/:id" element={<SingleUser />} />

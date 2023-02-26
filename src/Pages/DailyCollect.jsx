@@ -23,18 +23,18 @@ const DailyCollect = () => {
   const [msg, setMsg] = useState();
 
   const getCollecting = async () => {
-    await fetch("http://localhost:4000/collecting")
+    await fetch("https://installment-json-serve.onrender.com/collecting")
       .then((res) => res.json())
       .then((data) => setCollecting(data));
   };
   const getUsers = async () => {
-    await fetch("http://localhost:4000/users")
+    await fetch("https://installment-json-serve.onrender.com/users")
       .then((res) => res.json())
       .then((data) => setUsers(data));
   };
 
   const getOrders = async () => {
-    await fetch("http://localhost:4000/orders")
+    await fetch("https://installment-json-serve.onrender.com/orders")
       .then((res) => res.json())
       .then((data) => {
         setOrders(data);
@@ -56,7 +56,7 @@ const DailyCollect = () => {
     e.preventDefault();
     setIsLoading(true);
     if (created_day && price && username) {
-      await fetch(`http://localhost:4000/collect_day`, {
+      await fetch(`https://installment-json-serve.onrender.com/collect_day`, {
         method: "POST",
         headers: {
           "Access-Control-Allow-Origin": "*",

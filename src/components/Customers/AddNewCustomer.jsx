@@ -17,7 +17,7 @@ export const AddNewCustomer = () => {
     e.preventDefault();
     setIsLoading(true);
     if (name && phone) {
-      await fetch(`http://localhost:4000/users`, {
+      await fetch(`https://installment-json-serve.onrender.com/users`, {
         method: "POST",
         headers: {
           "Access-Control-Allow-Origin": "*",
@@ -111,7 +111,7 @@ export const AddNewCustomer = () => {
                 تم الحفظ بنجاح
               </p>
             ) : (
-              <p className="bg-red-200 text-red-600 p-2 rounded px-6">{msg}</p>
+              <p className="bg-red-200 text-red-600 p-2 rounded px-6">خطأ لم يتم الاضافة يرجي المحاولة مرة اخري</p>
             )}
           </>
         ) : null}

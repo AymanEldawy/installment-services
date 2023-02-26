@@ -21,7 +21,7 @@ const AddNewOrder = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const getUsers = async () => {
-    await fetch("http://localhost:4000/users")
+    await fetch("https://installment-json-serve.onrender.com/users")
       .then((res) => res.json())
       .then((data) => setUsers(data));
   };
@@ -34,7 +34,7 @@ const AddNewOrder = () => {
     console.log(msg);
     e.preventDefault();
     if (product_name && product_price && total_price && username && user_id) {
-      await fetch(`http://localhost:4000/orders`, {
+      await fetch(`https://installment-json-serve.onrender.com/orders`, {
         method: "POST",
         headers: {
           "Access-Control-Allow-Origin": "*",
@@ -102,9 +102,13 @@ const AddNewOrder = () => {
               >
                 <option>...</option>
                 {users?.map((user) => (
-                  <option value={`${user?.id}|${user?.name}`}>
-                    {user?.name}
-                  </option>
+                  <>
+                    {user?.status ? (
+                      <option value={`${user?.id}|${user?.name}`}>
+                        {user?.name}
+                      </option>
+                    ) : null}
+                  </>
                 ))}
               </select>
             </div>

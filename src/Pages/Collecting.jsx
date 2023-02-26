@@ -11,7 +11,7 @@ const Collecting = () => {
   const [collectDays, setCollectDays] = useState();
   const [collectingFilter, setCollectingFilter] = useState();
   const getCollecting = async () => {
-    await fetch("http://localhost:4000/collecting")
+    await fetch("https://installment-json-serve.onrender.com/collecting")
       .then((res) => res.json())
       .then((data) => {
         setCollecting(data);
@@ -19,7 +19,7 @@ const Collecting = () => {
       });
   };
   const getCollectingDays = async () => {
-    await fetch("http://localhost:4000/collect_day")
+    await fetch("https://installment-json-serve.onrender.com/collect_day")
       .then((res) => res.json())
       .then((data) => setCollectDays(data));
   };
@@ -72,7 +72,7 @@ const Collecting = () => {
     } else {
       let confirm = window.confirm("هل انت متاكد انك تريد اضافة يوم جديد؟");
       if (confirm) {
-        await fetch(`http://localhost:4000/collecting`, {
+        await fetch(`https://installment-json-serve.onrender.com/collecting`, {
           method: "POST",
           headers: {
             "Access-Control-Allow-Origin": "*",

@@ -9,14 +9,14 @@ const SingleOrder = () => {
   const navigate = useNavigate();
   const { id } = params;
   const getOrder = async () => {
-    await fetch(`http://localhost:4000/orders/${id}`)
+    await fetch(`https://installment-json-serve.onrender.com/orders/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setOrder(data);
       });
   };
   const getCollectingDays = async () => {
-    await fetch("http://localhost:4000/collect_day")
+    await fetch("https://installment-json-serve.onrender.com/collect_day")
       .then((res) => res.json())
       .then((data) => {
         let dayCollecting = data.filter(
@@ -38,7 +38,7 @@ const SingleOrder = () => {
   const deleteOrder = async () => {
     let confirm = window.confirm("هل انت متاكد انك تريد حذف الطلب؟");
     if (confirm) {
-      await fetch(`http://localhost:4000/orders/${order?.id}`, {
+      await fetch(`https://installment-json-serve.onrender.com/orders/${order?.id}`, {
         method: "DELETE",
       })
         .then((res) => res.json())
@@ -53,7 +53,7 @@ const SingleOrder = () => {
     );
     console.log(order?.id);
     if (confirm) {
-      await fetch(`http://localhost:4000/orders/${order?.id}`, {
+      await fetch(`https://installment-json-serve.onrender.com/orders/${order?.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
