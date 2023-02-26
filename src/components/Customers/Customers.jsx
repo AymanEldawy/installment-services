@@ -115,6 +115,7 @@ export const Customers = (props) => {
               <th className="border p-2 whitespace-nowrap">الأسم</th>
               <th className="border p-2 whitespace-nowrap">رقم التليفون</th>
               <th className="border p-2 whitespace-nowrap">الحالة</th>
+              <th className="border p-2 whitespace-nowrap">تاريخ التسجيل</th>
               <th className="border p-2 whitespace-nowrap">أعدادات</th>
             </tr>
           </thead>
@@ -139,6 +140,14 @@ export const Customers = (props) => {
                     </td>
                     <td className="border p-2 text-xs md:text-lg">
                       {!user?.status ? "محظور" : "يسمح"}
+                    </td>
+                    <td className="border p-2 text-xs md:text-lg">
+                      {new Date(user?.created_at)?.toLocaleDateString("ar-EG", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                        weekday: "long",
+                      })}
                     </td>
                     <td className="border p-2 text-xs md:text-lg">
                       <button

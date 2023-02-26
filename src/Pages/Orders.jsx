@@ -113,6 +113,7 @@ const Orders = () => {
                 <th className="border p-2 whitespace-nowrap">العميل</th>
                 <th className="border p-2 whitespace-nowrap">المقدم</th>
                 <th className="border p-2 whitespace-nowrap">سعر الطلب</th>
+                <th className="border p-2 whitespace-nowrap">تاريخ البدء</th>
                 <th className="border p-2 whitespace-nowrap">عدد الاشهر</th>
                 <th className="border p-2 whitespace-nowrap">المبلغ الشهري</th>
                 <th className="border p-2 whitespace-nowrap">السعر بالفائدة</th>
@@ -148,6 +149,17 @@ const Orders = () => {
                       <td className="border p-2">{order?.username}</td>
                       <td className="border p-2">{order?.offered}</td>
                       <td className="border p-2">{order?.product_price}</td>
+                      <td className="border p-2">
+                        {new Date(order?.created_at)?.toLocaleDateString(
+                          "ar-EG",
+                          {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                            weekday: "long",
+                          }
+                        )}
+                      </td>
                       <td className="border p-2">{order?.month_count}</td>
                       <td className="border p-2">{order?.price_per_month}</td>
                       <td className="border p-2">{order?.total_price}</td>

@@ -117,13 +117,20 @@ const SingleOrder = () => {
                 )}
               </strong>
             </li>
-            <li className="flex gap-4 p-2 border-b bg-gray-100">
-              <span className="w-28 flex-1">المقدم:</span>{" "}
-              <strong className="flex-1">{order?.offered}</strong>
-            </li>
           </ul>
 
           <ul className="shadow bg-white rounded-md  flex-1 ">
+            <li className="flex gap-4 p-2 border-b bg-gray-100">
+              <span className="w-28 flex-1"> تاريخ البدء:</span>{" "}
+              <strong className="flex-1">
+                {new Date(order?.created_at)?.toLocaleDateString("ar-EG", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                  weekday: "long",
+                })}
+              </strong>
+            </li>
             <li className="flex gap-4 p-2 border-b bg-gray-100">
               <span className="w-28 flex-1">عدد أشهر التقسيط:</span>{" "}
               <strong className="flex-1">{order?.month_count}</strong>
@@ -141,6 +148,10 @@ const SingleOrder = () => {
           </ul>
 
           <ul className="shadow bg-white rounded-md  flex-1 ">
+            <li className="flex gap-4 p-2 border-b bg-gray-100">
+              <span className="w-28 flex-1">المقدم:</span>{" "}
+              <strong className="flex-1">{order?.offered}</strong>
+            </li>
             <li className="flex gap-4 p-2 border-b bg-gray-100">
               <span className="w-28 flex-1"> سعر الطلب:</span>{" "}
               <strong className="flex-1">{order?.product_price}</strong>
