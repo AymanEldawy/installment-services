@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ReactPaginate from "react-paginate";
 import { NavLink } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
@@ -10,6 +11,8 @@ const Collecting = () => {
   const [collecting, setCollecting] = useState();
   const [collectDays, setCollectDays] = useState();
   const [collectingFilter, setCollectingFilter] = useState();
+  const [itemOffset, setItemOffset] = useState(0);
+
   const getCollecting = async () => {
     await fetch("https://installment-json-serve.onrender.com/collecting")
       .then((res) => res.json())
@@ -114,6 +117,17 @@ const Collecting = () => {
       setCollectingFilter(collecting);
     }
   };
+
+  const itemsPerPage = 30;
+  const endOffset = itemOffset + itemsPerPage;
+  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+  const currentItems = collectingFilter?.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(collectingFilter?.length / itemsPerPage);
+  const handlePageClick = (event) => {
+    const newOffset =
+      (event.selected * itemsPerPage) % collectingFilter?.length;
+    setItemOffset(newOffset);
+  };
   return (
     <>
       {/* {open ? <AddNewCollect close={() => setOpen(false)} /> : null} */}
@@ -151,8 +165,8 @@ const Collecting = () => {
               </tr>
             </thead>
             <tbody>
-              {collectingFilter
-                ? collectingFilter
+              {currentItems
+                ? currentItems
                     ?.sort(function (a, b) {
                       return new Date(b.date) - new Date(a.date);
                     })
@@ -188,6 +202,16 @@ const Collecting = () => {
                 : null}
             </tbody>
           </table>{" "}
+          <ReactPaginate
+            className="table-pagination"
+            breakLabel="..."
+            nextLabel="التالي"
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={5}
+            pageCount={pageCount}
+            previousLabel="السابق"
+            renderOnZeroPageCount={null}
+          />
         </div>
       </div>
     </>

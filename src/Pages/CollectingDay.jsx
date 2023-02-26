@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import ReactPaginate from "react-paginate";
 import { useParams } from "react-router-dom";
 
 import { SectionTitle } from "./../components/SectionTitle/SectionTitle";
@@ -8,6 +9,7 @@ const CollectingDay = () => {
   const [collect, setCollect] = useState();
   const [collectingFilter, setCollectingFilter] = useState();
   const [collectDays, setCollectDays] = useState();
+  const [itemOffset, setItemOffset] = useState(0);
   const params = useParams();
   const { id } = params;
 
@@ -85,6 +87,16 @@ const CollectingDay = () => {
     console.log(collectingFilter);
   };
 
+  const itemsPerPage = 30;
+  const endOffset = itemOffset + itemsPerPage;
+  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+  const currentItems = collectingFilter?.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(collectingFilter?.length / itemsPerPage);
+  const handlePageClick = (event) => {
+    const newOffset =
+      (event.selected * itemsPerPage) % collectingFilter?.length;
+    setItemOffset(newOffset);
+  };
   return (
     <div className="mt-12">
       <div className="container">
@@ -150,8 +162,8 @@ const CollectingDay = () => {
               </tr>
             </thead>
             <tbody>
-              {collectingFilter
-                ? collectingFilter?.map((collectDay, index) => (
+              {currentItems
+                ? currentItems?.map((collectDay, index) => (
                     <tr key={collectDay?.id}>
                       <td className="border p-2">{index + 1}</td>
                       <td className="border p-2">{collectDay?.username}</td>
@@ -170,6 +182,16 @@ const CollectingDay = () => {
                 : null}
             </tbody>
           </table>{" "}
+          <ReactPaginate
+            className="table-pagination"
+            breakLabel="..."
+            nextLabel="التالي"
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={5}
+            pageCount={pageCount}
+            previousLabel="السابق"
+            renderOnZeroPageCount={null}
+          />
         </div>
       </div>
     </div>

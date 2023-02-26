@@ -55,7 +55,7 @@ const DailyCollect = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    if (created_day && price && username) {
+    if (created_day && price && username && selectedOrder) {
       await fetch(`https://installment-json-serve.onrender.com/collect_day`, {
         method: "POST",
         headers: {

@@ -1,11 +1,13 @@
 import { axios } from "axios";
 import React, { useEffect, useState } from "react";
+import ReactPaginate from "react-paginate";
 import { NavLink } from "react-router-dom";
 
 export const Customers = (props) => {
   const [users, setUsers] = useState();
   const [usersFilter, setUsersFilters] = useState(null);
   const [filterStatus, setFilterStatus] = useState("الكل");
+  const [itemOffset, setItemOffset] = useState(0);
 
   const getUsers = async () => {
     await fetch("https://installment-json-serve.onrender.com/users")
@@ -56,6 +58,15 @@ export const Customers = (props) => {
         setFilterStatus("الكل");
         setUsersFilters(users);
     }
+  };
+  const itemsPerPage = 30;
+  const endOffset = itemOffset + itemsPerPage;
+  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+  const currentItems = usersFilter?.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(usersFilter?.length / itemsPerPage);
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % usersFilter?.length;
+    setItemOffset(newOffset);
   };
 
   return (
@@ -108,13 +119,13 @@ export const Customers = (props) => {
             </tr>
           </thead>
           <tbody>
-            {usersFilter?.length
-              ? usersFilter?.map((user, index) => (
+            {currentItems?.length
+              ? currentItems?.map((user, index) => (
                   <tr
                     className={`border ${!user?.status ? "bg-red-300" : ""}`}
                     key={index}
                   >
-                    <td className="border p-2">1</td>
+                    <td className="border p-2">{index + 1}</td>
                     <td className="border p-2 text-xs md:text-lg">
                       <NavLink
                         to={`customers/${user?.id}`}
@@ -123,7 +134,9 @@ export const Customers = (props) => {
                         {user?.name}
                       </NavLink>
                     </td>
-                    <td className="border p-2 text-xs md:text-lg">{user?.phone}</td>
+                    <td className="border p-2 text-xs md:text-lg">
+                      {user?.phone}
+                    </td>
                     <td className="border p-2 text-xs md:text-lg">
                       {!user?.status ? "محظور" : "يسمح"}
                     </td>
@@ -140,6 +153,16 @@ export const Customers = (props) => {
               : null}
           </tbody>
         </table>
+        <ReactPaginate
+          className="table-pagination"
+          breakLabel="..."
+          nextLabel="التالي"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={5}
+          pageCount={pageCount}
+          previousLabel="السابق"
+          renderOnZeroPageCount={null}
+        />
       </div>
     </>
   );

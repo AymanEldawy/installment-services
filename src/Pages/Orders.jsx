@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ReactPaginate from "react-paginate";
 import { Link } from "react-router-dom";
 
 import { PrimaryButton } from "./../components/Global/PrimaryButton/PrimaryButton";
@@ -7,6 +8,7 @@ const Orders = () => {
   const [filterStatus, setFilterStatus] = useState("الكل");
   const [orders, setOrders] = useState();
   const [filterOrders, setFilterOrders] = useState();
+  const [itemOffset, setItemOffset] = useState(0);
   const getOrders = async () => {
     await fetch("https://installment-json-serve.onrender.com/orders")
       .then((res) => res.json())
@@ -49,6 +51,15 @@ const Orders = () => {
         setFilterStatus("الكل");
         setFilterOrders(orders);
     }
+  };
+  const itemsPerPage = 30;
+  const endOffset = itemOffset + itemsPerPage;
+  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+  const currentItems = filterOrders?.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(filterOrders?.length / itemsPerPage);
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % filterOrders?.length;
+    setItemOffset(newOffset);
   };
   return (
     <>
@@ -108,8 +119,8 @@ const Orders = () => {
               </tr>
             </thead>
             <tbody>
-              {filterOrders
-                ? filterOrders?.map((order, index) => (
+              {currentItems
+                ? currentItems?.map((order, index) => (
                     <tr
                       key={order?.id}
                       className={`${order?.status ? "bg-green-300" : ""} `}
@@ -145,6 +156,16 @@ const Orders = () => {
                 : null}
             </tbody>
           </table>{" "}
+          <ReactPaginate
+            className="table-pagination"
+            breakLabel="..."
+            nextLabel="التالي"
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={5}
+            pageCount={pageCount}
+            previousLabel="السابق"
+            renderOnZeroPageCount={null}
+          />
         </div>
       </div>
     </>

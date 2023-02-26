@@ -43,3 +43,37 @@ div:has(table)::-webkit-scrollbar {
   /* display: none; */
   width: 0px; /* For Chrome, Safari, and Opera */
 }
+.table-pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 10px;
+  /* background-color: #fff; */
+  padding: .5rem;
+  align-items: center;
+}
+.next,
+.previous {
+  background: #2563eb;
+  color: #fff;
+  padding: .5rem;
+  font-size: 11px;
+  border-radius: .5rem
+}
+
+
+.table-pagination li.disabled {
+  background: #989898;
+
+}
+.table-pagination li {
+  min-width: 30px;
+  text-align: center;
+  line-height: 1.1;
+}
+.table-pagination .selected {
+  background: #2563eb;
+  color: #fff;
+  padding: .5rem;
+  border-radius: .5rem
+}

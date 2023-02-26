@@ -11,7 +11,7 @@ export default function Home() {
   // https://deploy-json-server-r6e2vseod-aymaneldawy.vercel.app/orders
 
   return (
-    <div className="container pt-4 lg:pt-8 mx-auto">
+    <div className="container pt-4 lg:pt-8 mx-auto !mb-12">
       {stage === 1 ? (
         <>
           <SectionTitle
