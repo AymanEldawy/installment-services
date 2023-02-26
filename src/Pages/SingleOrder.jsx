@@ -38,9 +38,12 @@ const SingleOrder = () => {
   const deleteOrder = async () => {
     let confirm = window.confirm("هل انت متاكد انك تريد حذف الطلب؟");
     if (confirm) {
-      await fetch(`https://installment-json-serve.onrender.com/orders/${order?.id}`, {
-        method: "DELETE",
-      })
+      await fetch(
+        `https://installment-json-serve.onrender.com/orders/${order?.id}`,
+        {
+          method: "DELETE",
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           navigate("/");
@@ -53,16 +56,19 @@ const SingleOrder = () => {
     );
     console.log(order?.id);
     if (confirm) {
-      await fetch(`https://installment-json-serve.onrender.com/orders/${order?.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...order,
-          status: true,
-        }),
-      })
+      await fetch(
+        `https://installment-json-serve.onrender.com/orders/${order?.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...order,
+            status: true,
+          }),
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           getOrder();
@@ -72,7 +78,7 @@ const SingleOrder = () => {
 
   if (!order) return;
   return (
-    <div className="my-8">
+    <div className="my-8 text-xs md:text-base">
       <div className="container">
         <h2 className="text-2xl font-semibold ">معلومات الطلب</h2>
         <div className="border-t mb-6 mt-2 border-gray-400" />
@@ -152,52 +158,57 @@ const SingleOrder = () => {
         </div>
         <h3 className="text-xl font-semibold mt-8">المدفوعات</h3>
         <div className="border-t mb-6 mt-2 border-gray-400" />
-        <table className="shadow table-auto w-full mt-8 bg-white">
-          <thead className="bg-blue-600 text-white">
-            <tr className="border">
-              <th className="border p-2 whitespace-nowrap">تاريخ السداد</th>
-              <th className="border p-2 whitespace-nowrap">المبلغ</th>
-              <th className="border p-2 whitespace-nowrap">المستلم </th>
-            </tr>
-          </thead>
-          <tbody>
-            {collectingDays?.map((collect, index) => (
+        <div className="overflow-auto w-full">
+          <table className="shadow table-auto w-full mt-8 bg-white">
+            <thead className="bg-blue-600 text-white">
+              <tr className="border">
+                <th className="border p-2 whitespace-nowrap">تاريخ السداد</th>
+                <th className="border p-2 whitespace-nowrap">المبلغ</th>
+                <th className="border p-2 whitespace-nowrap">المستلم </th>
+              </tr>
+            </thead>
+            <tbody>
+              {collectingDays?.map((collect, index) => (
+                <tr>
+                  <td className="border p-2">
+                    {" "}
+                    {new Date(collect?.created_at)?.toLocaleDateString(
+                      "ar-EG",
+                      {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                        weekday: "long",
+                      }
+                    )}
+                  </td>
+                  <td className="border p-2">{collect?.price}</td>
+                  <td className="border p-2">{collect?.created_name}</td>
+                </tr>
+              ))}
+            </tbody>
+            <tfoot className="bg-gray-100">
               <tr>
                 <td className="border p-2">
-                  {" "}
-                  {new Date(collect?.created_at)?.toLocaleDateString("ar-EG", {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                    weekday: "long",
-                  })}
+                  <div className="flex gap-4 items-center">
+                    أجمالي عدد الاشهر المدفوعة
+                    <span className="bg-green-400 p-1 sm:px-4 text-sm rounded">
+                      {collectingDays?.length}
+                    </span>{" "}
+                  </div>
                 </td>
-                <td className="border p-2">{collect?.price}</td>
-                <td className="border p-2">{collect?.created_name}</td>
+                <td className="border p-2" colSpan={2}>
+                  <div className="flex gap-4 items-center">
+                    اجمالي المبلغ المسدد
+                    <span className="bg-green-400 p-1 sm:px-4 text-sm rounded">
+                      {getTotalPaid()}
+                    </span>
+                  </div>
+                </td>
               </tr>
-            ))}
-          </tbody>
-          <tfoot className="bg-gray-100">
-            <tr>
-              <td className="border p-2">
-                <div className="flex gap-4 items-center">
-                  أجمالي عدد الاشهر المدفوعة
-                  <span className="bg-green-400 p-1 px-4 text-sm rounded">
-                    {collectingDays?.length}
-                  </span>{" "}
-                </div>
-              </td>
-              <td className="border p-2" colSpan={2}>
-                <div className="flex gap-4 items-center">
-                  اجمالي المبلغ المسدد
-                  <span className="bg-green-400 p-1 px-4 text-sm rounded">
-                    {getTotalPaid()}
-                  </span>
-                </div>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
+            </tfoot>
+          </table>
+        </div>
       </div>
     </div>
   );

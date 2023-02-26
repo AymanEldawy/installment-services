@@ -64,7 +64,7 @@ const SingleUser = () => {
         >
           {user?.status ? "حظر" : "رفع الحظر"}
         </button>
-        <div className="flex flex-col md:flex-row gap-8 sm:text-lg items-start">
+        <div className="flex flex-col md:flex-row gap-8 sm:text-lg items-start text-xs md:text-base">
           <ul className="shadow bg-white rounded-md p-2 md:max-w-sm flex-1 ">
             <li className="flex gap-4 p-2 border-b bg-gray-100">
               <span className="w-28 flex-1 ">الاسم:</span>{" "}
@@ -90,7 +90,7 @@ const SingleUser = () => {
                 {user?.status ? (
                   "يسمح"
                 ) : (
-                  <span className="bg-red-500 text-sm text-white p-1">
+                  <span className="bg-red-500 text-white p-1 text-xs md:text-sm">
                     لا يسمح بالتقسيط له
                   </span>
                 )}
@@ -105,7 +105,7 @@ const SingleUser = () => {
               </strong>
             </li>
           </ul>
-          <div className="flex-1">
+          <div className="flex-1 w-full">
             {orders?.map((order) => (
               <UserOrders order={order} key={order?.id} />
             ))}

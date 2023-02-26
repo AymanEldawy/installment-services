@@ -19,7 +19,7 @@ export default function Home() {
             extraContent={
               <button
                 onClick={() => setStage(2)}
-                className="flex gap-1 bg-blue-600 text-white p-2 rounded-md"
+                className="flex gap-1 bg-blue-600  text-xs md:text-sm text-white p-2 rounded-md"
               >
                 <PlusCircleIcon /> أضافة عميل
               </button>
@@ -35,7 +35,7 @@ export default function Home() {
             extraContent={
               <button
                 onClick={() => setStage(1)}
-                className="flex gap-1 bg-red-600 text-white p-2 rounded-md"
+                className="flex gap-1 bg-red-600 text-xs md:text-sm text-white p-2 rounded-md"
               >
                 الغاء
               </button>

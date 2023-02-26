@@ -57,7 +57,7 @@ const Orders = () => {
           <PrimaryButton text="أضافة طلب جديد" classes="mt-8" />
         </Link>
         <div className="border-t border-b my-4 py-4 border-gray-300">
-          <div className="flex gap-4 justify-between">
+          <div className="flex gap-4 justify-between flex-wrap  text-xs md:text-base">
             <input
               onChange={handelSearch}
               type="search"
@@ -93,7 +93,7 @@ const Orders = () => {
           </div>
         </div>
         <div className="overflow-x-auto">
-          <table className="shadow table-auto w-full mt-8 bg-white">
+          <table className="shadow table-auto w-full mt-8 bg-white text-xs md:text-base">
             <thead className="bg-blue-600 text-white">
               <tr className="border">
                 <th className="border p-2 ">#</th>
@@ -118,18 +118,18 @@ const Orders = () => {
                       <td className="border p-2">
                         <Link
                           to={`/orders/${order?.id}`}
-                          className="text-blue-500 font-medium text-lg bg-blue-100 p-1 rounded cursor-pointer"
+                          className="text-blue-500 font-medium md:text-lg bg-blue-100 p-1 rounded cursor-pointer"
                         >
                           {order?.product_name}
                         </Link>
                       </td>
                       <td className="border p-2">
                         {order?.status ? (
-                          <span className="p-1 text-sm rounded-md text-white bg-green-400">
+                          <span className="p-1  text-xs md:text-sm rounded-md text-white bg-green-400">
                             مكتمل
                           </span>
                         ) : (
-                          <span className="p-1 text-sm rounded-md text-black bg-yellow-300">
+                          <span className="p-1  text-xs md:text-sm rounded-md text-black bg-yellow-300">
                             مستمر
                           </span>
                         )}

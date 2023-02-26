@@ -61,7 +61,7 @@ export const Customers = (props) => {
   return (
     <>
       <div className=" border-b mb-4 mt-1 pt-2 pb-5 border-gray-300">
-        <div className="flex gap-4 justify-between">
+        <div className="flex text-xs gap-4 justify-between flex-wrap">
           <input
             onChange={handelSearch}
             type="search"
@@ -96,49 +96,51 @@ export const Customers = (props) => {
           </div>
         </div>
       </div>
-      <table className="shadow table-auto w-full bg-white">
-        <thead className="bg-blue-600 text-white">
-          <tr className="border">
-            <th className="border p-2 whitespace-nowrap">#</th>
-            <th className="border p-2 whitespace-nowrap">الأسم</th>
-            <th className="border p-2 whitespace-nowrap">رقم التليفون</th>
-            <th className="border p-2 whitespace-nowrap">الحالة</th>
-            <th className="border p-2 whitespace-nowrap">أعدادات</th>
-          </tr>
-        </thead>
-        <tbody>
-          {usersFilter?.length
-            ? usersFilter?.map((user, index) => (
-                <tr
-                  className={`border ${!user?.status ? "bg-red-300" : ""}`}
-                  key={index}
-                >
-                  <td className="border p-2">1</td>
-                  <td className="border p-2">
-                    <NavLink
-                      to={`customers/${user?.id}`}
-                      className="underline text-blue-500 font-medium text-lg bg-blue-100 p-1 rounded"
-                    >
-                      {user?.name}
-                    </NavLink>
-                  </td>
-                  <td className="border p-2">{user?.phone}</td>
-                  <td className="border p-2">
-                    {!user?.status ? "محظور" : "يسمح"}
-                  </td>
-                  <td className="border p-2">
-                    <button
-                      onClick={() => deleteUser(user?.id)}
-                      className="bg-red-100 text-red-500 rounded-md text-sm p-1 px-2"
-                    >
-                      حذف
-                    </button>
-                  </td>
-                </tr>
-              ))
-            : null}
-        </tbody>
-      </table>
+      <div className="overflow-auto w-full">
+        <table className="shadow table-auto w-full bg-white text-xs md:text-lg">
+          <thead className="bg-blue-600 text-white">
+            <tr className="border">
+              <th className="border p-2 whitespace-nowrap">#</th>
+              <th className="border p-2 whitespace-nowrap">الأسم</th>
+              <th className="border p-2 whitespace-nowrap">رقم التليفون</th>
+              <th className="border p-2 whitespace-nowrap">الحالة</th>
+              <th className="border p-2 whitespace-nowrap">أعدادات</th>
+            </tr>
+          </thead>
+          <tbody>
+            {usersFilter?.length
+              ? usersFilter?.map((user, index) => (
+                  <tr
+                    className={`border ${!user?.status ? "bg-red-300" : ""}`}
+                    key={index}
+                  >
+                    <td className="border p-2">1</td>
+                    <td className="border p-2 text-xs md:text-lg">
+                      <NavLink
+                        to={`customers/${user?.id}`}
+                        className="underline text-blue-500 font-medium md:text-lg bg-blue-100 p-1 rounded"
+                      >
+                        {user?.name}
+                      </NavLink>
+                    </td>
+                    <td className="border p-2 text-xs md:text-lg">{user?.phone}</td>
+                    <td className="border p-2 text-xs md:text-lg">
+                      {!user?.status ? "محظور" : "يسمح"}
+                    </td>
+                    <td className="border p-2 text-xs md:text-lg">
+                      <button
+                        onClick={() => deleteUser(user?.id)}
+                        className="bg-red-100 text-red-500 rounded-md p-1 px-2"
+                      >
+                        حذف
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              : null}
+          </tbody>
+        </table>
+      </div>
     </>
   );
 };

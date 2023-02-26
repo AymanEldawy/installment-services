@@ -104,7 +104,7 @@ const DailyCollect = () => {
         <SectionTitle title="أضافة تحصيل جديد" />
       </div>
       <form onSubmit={handleSubmit} className="mt-8">
-        <div className="md:grid md:grid-cols-2 gap-4">
+        <div className="md:grid md:grid-cols-2 gap-4 text-xs md:text-base">
           <div className="mb-4">
             <label className="flex items-center justify-between mb-2">
               تاريخ اليوم
@@ -143,10 +143,7 @@ const DailyCollect = () => {
             >
               <option>....</option>
               {users?.map((user) => (
-                <option
-                  key={user?.id}
-                  value={`${user?.id}|${user?.name}`}
-                >
+                <option key={user?.id} value={`${user?.id}|${user?.name}`}>
                   {user?.name}
                 </option>
               ))}
@@ -154,7 +151,7 @@ const DailyCollect = () => {
           </div>
         </div>
 
-        <div className="md:grid md:grid-cols-2 gap-4">
+        <div className="md:grid md:grid-cols-2 gap-4 text-xs md:text-base">
           <div className="mb-4">
             <label className="flex items-center justify-between mb-2">
               حدد الطلب
@@ -169,9 +166,16 @@ const DailyCollect = () => {
             >
               <option>....</option>
               {filterOrders?.map((order) => (
-                <option key={order?.id} value={`${order?.id}|${order?.product_name}`}>
-                  {order?.product_name}
-                </option>
+                <>
+                  {!order?.status ? (
+                    <option
+                      key={order?.id}
+                      value={`${order?.id}|${order?.product_name}`}
+                    >
+                      {order?.product_name}
+                    </option>
+                  ) : null}
+                </>
               ))}
             </select>
           </div>

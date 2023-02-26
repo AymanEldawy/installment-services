@@ -86,14 +86,14 @@ const AddNewOrder = () => {
     <div className=" mt-8">
       <div className="container">
         <SectionTitle title="أضافة طلب جديد" />
-        <form onSubmit={handelSubmit} className="mt-8">
+        <form onSubmit={handelSubmit} className="mt-8  text-xs md:text-base">
           <div className="md:grid md:grid-cols-2 gap-4">
             <div className="mb-4">
               <label className="flex items-center justify-between mb-2">
                 اسم العميل
               </label>
               <select
-                className="border border-gray-300 w-full p-2 rounded-md appearance-none"
+                className="border border-gray-300 w-full p-3 rounded-md appearance-none"
                 onChange={(e) => {
                   const userInfo = e.target.value?.split("|");
                   setUser_id(userInfo[0]);

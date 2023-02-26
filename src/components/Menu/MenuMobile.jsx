@@ -8,7 +8,7 @@ export const MenuMobile = ({ openMenu, setOpenedSearch }) => {
   return (
     <div className="bg-indigo-600 text-white">
       <div className="container !py-4 !md:px-4">
-        <ul className="flex items-center gap-2 md:gap-6 md:text-lg w-full justify-center">
+        <ul className="flex items-center md:gap-6 text-sm md:text-lg w-full justify-center">
           <li className="">
             <NavLink
               to="/"
@@ -36,7 +36,7 @@ export const MenuMobile = ({ openMenu, setOpenedSearch }) => {
           <li className="">
             <NavLink
               to="/daily-collect"
-              className="p-2 rounded-md hover:bg-blue-100 hover:text-blue-600 "
+              className="p-2 rounded-md hover:bg-blue-100 hover:text-blue-600 whitespace-nowrap"
             >
               التحصيل اليومي
             </NavLink>

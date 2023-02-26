@@ -60,7 +60,7 @@ export const AddNewCustomer = () => {
   };
   return (
     <form className="" onSubmit={handleSubmit}>
-      <div className="md:flex gap-4">
+      <div className="md:flex gap-4 text-xs md:text-base">
         <InputField
           type="text"
           label="أسم العميل (أجباري)"
